@@ -7,8 +7,10 @@ const Container = styled.div`
   padding-bottom: 24px;
 `;
 
-const GalleryContainer = styled.div`
-  margin: 0 auto;
+const ErrorText = styled.p`
+  text-align: center;
+  color: red;
+  font-size: 32px;
 `;
 
-export default Container;
+export { Container, ErrorText };
