@@ -1,4 +1,6 @@
 import { Component } from 'react';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import PropTypes from 'prop-types';
 import {
   SearchbarContainer,
@@ -21,6 +23,11 @@ class Searchbar extends Component {
   handleSubmit = event => {
     event.preventDefault();
     const { search } = this.state;
+
+    if (search.trim() === '') {
+      return toast.error('Please enter something to start your search!');
+    }
+
     this.props.onSubmitForm(search);
     this.reset();
   };

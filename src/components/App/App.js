@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { ToastContainer } from 'react-toastify';
 
 import fetchImgWithQuery from '../../services';
 import Searchbar from '../Searchbar';
@@ -104,6 +105,7 @@ class App extends Component {
             No results were found for your search. Try again.
           </ErrorText>
         )}
+        <ToastContainer autoClose={3000} />
       </Container>
     );
   }
