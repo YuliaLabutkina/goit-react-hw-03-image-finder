@@ -21,33 +21,36 @@ class App extends Component {
     error: null,
   };
 
-  onSubmitForm = data => {
+  onSubmitForm = async data => {
     this.setState({ search: data, page: 1, isLoading: true, error: null });
-    fetchImgWithQuery(data)
-      .then(data => {
-        this.setState(({ page }) => ({
-          imgArray: [...data],
-          page: page + 1,
-        }));
-        this.scrollImg();
-      })
-      .catch(error => this.setState({ error }))
-      .finally(() => this.setState({ isLoading: false }));
+
+    try {
+      const request = await fetchImgWithQuery(data);
+      this.setState(({ page }) => ({ imgArray: [...request], page: page + 1 }));
+      this.scrollImg();
+    } catch (error) {
+      this.setState({ error });
+    } finally {
+      this.setState({ isLoading: false });
+    }
   };
 
-  uploadMorePhotos = () => {
+  uploadMorePhotos = async () => {
     const { search, page } = this.state;
     this.setState({ isLoading: true });
-    fetchImgWithQuery(search, page)
-      .then(data => {
-        this.setState(({ imgArray, page }) => ({
-          imgArray: [...imgArray, ...data],
-          page: page + 1,
-        }));
-        this.scrollImg();
-      })
-      .catch(error => this.setState({ error }))
-      .finally(() => this.setState({ isLoading: false }));
+
+    try {
+      const request = await fetchImgWithQuery(search, page);
+      this.setState(({ imgArray, page }) => ({
+        imgArray: [...imgArray, ...request],
+        page: page + 1,
+      }));
+      this.scrollImg();
+    } catch (error) {
+      this.setState({ error });
+    } finally {
+      this.setState({ isLoading: false });
+    }
   };
 
   scrollImg = () => {
